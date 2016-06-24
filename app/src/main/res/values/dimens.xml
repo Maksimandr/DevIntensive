@@ -22,6 +22,11 @@
     <dimen name="size_56">56dp</dimen>
     <dimen name="size_64">64dp</dimen>
     <dimen name="size_72">72dp</dimen>
+    <dimen name="size_80">80dp</dimen>
+    <dimen name="size_88">88dp</dimen>
+    <dimen name="size_96">96dp</dimen>
+    <dimen name="size_104">104dp</dimen>
+    <dimen name="size_112">112dp</dimen>
 
     <!-- font sizes -->
     <dimen name="font_12">12sp</dimen>
@@ -33,5 +38,9 @@
     <dimen name="font_45">45sp</dimen>
     <dimen name="font_56">56sp</dimen>
     <dimen name="font_112">112sp</dimen>
+
+    <!-- line sizes -->
+    <dimen name="line_1">1dp</dimen>
+    <dimen name="line_2">2dp</dimen>
 
 </resources>
