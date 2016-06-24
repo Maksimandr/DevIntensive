@@ -12,6 +12,7 @@
         <item name="android:layout_width">@dimen/size_24</item>
         <item name="android:layout_height">@dimen/size_24</item>
         <item name="android:layout_marginTop">@dimen/space_16</item>
+        <item name="android:layout_marginBottom">@dimen/space_32</item>
     </style>
 
     <style name="icon.left" parent="icon">
@@ -50,14 +51,15 @@
     <style name="v_line">
         <item name="android:layout_width">@dimen/line_1</item>
         <item name="android:layout_height">@dimen/size_72</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="data_cont">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/space_72</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">@dimen/space_32</item>
         <item name="android:layout_marginRight">@dimen/space_16</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:orientation">vertical</item>
     </style>
 
