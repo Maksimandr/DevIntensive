@@ -1,5 +1,9 @@
 package com.softdesign.devintensive.ui.activities;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
@@ -14,12 +18,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.utils.ConstantManager;
+import com.softdesign.devintensive.utils.RoundedAvatarDrawable;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -28,6 +31,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private CoordinatorLayout mCoordinatorLayout;
     private Toolbar mToolbar;
     private DrawerLayout mNavigationDrawer;
+    private ImageView mUserAvatar;
+    private NavigationView mNavigationView;
+    private View mHeaderLayout;
+
+    private Bitmap mBitmap;
+    private RoundedAvatarDrawable mRoundedAvatarDrawable;
+    private Drawable mDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +49,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_coordinator_conteiner);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.navigation_drawer);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        mHeaderLayout = mNavigationView.inflateHeaderView(R.layout.drawer_header); // инфлейтим разметку нашего хедера во время выполнения
+        mUserAvatar = (ImageView) mHeaderLayout.findViewById(R.id.user_avatar); // и теперь имеем доступ к любому компоненту в headerLayout
+        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
+        mRoundedAvatarDrawable = new RoundedAvatarDrawable(mBitmap);
+        mUserAvatar.setImageDrawable(mRoundedAvatarDrawable);
 
         mCallImg.setOnClickListener(this);
 
@@ -98,6 +115,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 RanWithDelay();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mNavigationDrawer.isDrawerOpen(GravityCompat.START)){
+            mNavigationDrawer.closeDrawer(GravityCompat.START);
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override
