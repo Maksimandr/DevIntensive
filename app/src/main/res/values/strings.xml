@@ -14,5 +14,6 @@
     <string name="already_launched">активити уже создавалось</string>
     <string name="menu_my_profile">Мой профиль</string>
     <string name="user_name">Зарипов Максим</string>
+    <string name="menu_team">Команда</string>
 
 </resources>

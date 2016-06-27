@@ -11,6 +11,6 @@
             android:id="@+id/team_menu"
             android:checkable="true"
             android:icon="@drawable/ic_people_black_24dp"
-            android:title="@string/menu_my_profile"/>
+            android:title="@string/menu_team"/>
     </group>
 </menu>

@@ -3,25 +3,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.activities.MainActivity"
     android:id="@+id/navigation_drawer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.MainActivity">
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_coordinator_conteiner"
-        style="@style/mpwc">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
             style="@style/AppTheme.AppBarOverlay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/color_primary">
 
             <android.support.v7.widget.Toolbar
+                android:layout_marginTop="@dimen/space_24"
                 android:id="@+id/toolbar"
                 style="@style/AppTheme.PopupOverlay"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"/>
+                android:layout_height="?attr/actionBarSize"
+                app:titleTextColor="@color/white"/>
 
         </android.support.design.widget.AppBarLayout>
 
@@ -31,7 +35,8 @@
             android:orientation="vertical">
 
             <android.support.v4.widget.NestedScrollView
-                style="@style/mpwc">
+                style="@style/mpwc"
+                android:layout_marginTop="@dimen/space_72">
 
                 <LinearLayout
                     style="@style/mpwc"

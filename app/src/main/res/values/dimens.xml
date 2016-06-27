@@ -27,6 +27,7 @@
     <dimen name="size_96">96dp</dimen>
     <dimen name="size_104">104dp</dimen>
     <dimen name="size_112">112dp</dimen>
+    <dimen name="profile_image_size_256">256dp</dimen>
 
     <!-- font sizes -->
     <dimen name="font_12">12sp</dimen>
