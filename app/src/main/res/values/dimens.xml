@@ -44,4 +44,6 @@
     <dimen name="line_1">1dp</dimen>
     <dimen name="line_2">2dp</dimen>
 
+    <dimen name="fab_right_space">8dp</dimen>
+
 </resources>

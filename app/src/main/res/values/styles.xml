@@ -61,6 +61,7 @@
         <item name="android:layout_width">@dimen/line_1</item>
         <item name="android:layout_height">@dimen/size_72</item>
         <item name="android:layout_gravity">center</item>
+        <item name="android:background">@color/grey_light</item>
     </style>
 
     <style name="data_cont">

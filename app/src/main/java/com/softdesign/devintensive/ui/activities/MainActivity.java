@@ -2,11 +2,10 @@ package com.softdesign.devintensive.ui.activities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -17,27 +16,36 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.softdesign.devintensive.R;
+import com.softdesign.devintensive.data.managers.DataManager;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.softdesign.devintensive.utils.RoundedAvatarDrawable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
+    private boolean mCurrentEditMode;
+
     private static final String TAG = ConstantManager.TAG_PREFIX + "Main Activity";
-    private ImageView mCallImg;
+
+    private DataManager mDataManager;
     private CoordinatorLayout mCoordinatorLayout;
     private Toolbar mToolbar;
     private DrawerLayout mNavigationDrawer;
     private ImageView mUserAvatar;
     private NavigationView mNavigationView;
     private View mHeaderLayout;
-
     private Bitmap mBitmap;
     private RoundedAvatarDrawable mRoundedAvatarDrawable;
-    private Drawable mDrawable;
+    private FloatingActionButton mFab;
+    private List<EditText> mUserInfoView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,29 +53,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate");
 
-        mCallImg = (ImageView) findViewById(R.id.call_img);
+        mDataManager = DataManager.getInstance();
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_coordinator_conteiner);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.navigation_drawer);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
 
-        mHeaderLayout = mNavigationView.inflateHeaderView(R.layout.drawer_header); // инфлейтим разметку нашего хедера во время выполнения
-        mUserAvatar = (ImageView) mHeaderLayout.findViewById(R.id.user_avatar); // и теперь имеем доступ к любому компоненту в headerLayout
-        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
-        mRoundedAvatarDrawable = new RoundedAvatarDrawable(mBitmap);
-        mUserAvatar.setImageDrawable(mRoundedAvatarDrawable);
 
-        mCallImg.setOnClickListener(this);
+        int[] mUserInfoResId = {R.id.phone_et, R.id.email_et, R.id.vk_et, R.id.github_et, R.id.bio_et};
+        mUserInfoView = new ArrayList<>();
+
+        for (int i = 0; i < mUserInfoResId.length; i++) {
+            mUserInfoView.add((EditText) findViewById(mUserInfoResId[i]));
+        }
+
+        mFab.setOnClickListener(this);
 
         setupToolbar();
         setupDrawer();
+        setRoundedAvatar();
+        loadUserInfoValue();
 
-        if (savedInstanceState == null) {
-//            showSnackbar(getString(R.string.just_launch));
-//            showToast(getString(R.string.just_launch));
-        } else {
-//            showSnackbar(getString(R.string.already_launched));
-//            showToast(getString(R.string.already_launched));
+        if (savedInstanceState != null) {
+            mCurrentEditMode = savedInstanceState.getBoolean(ConstantManager.EDIT_MODE_KEY, false);
+            changeEditMode(mCurrentEditMode);
         }
     }
 
@@ -87,6 +96,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onPause() {
         super.onPause();
         Log.d(TAG, "onPause");
+        saveUserInfoValue();
     }
 
     @Override
@@ -110,16 +120,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.call_img:
-                showProgress();
-                RanWithDelay();
+            case R.id.fab:
+                mCurrentEditMode = !mCurrentEditMode;
+                changeEditMode(mCurrentEditMode);
                 break;
         }
     }
 
     @Override
     public void onBackPressed() {
-        if(mNavigationDrawer.isDrawerOpen(GravityCompat.START)){
+        if (mNavigationDrawer.isDrawerOpen(GravityCompat.START)) {
             mNavigationDrawer.closeDrawer(GravityCompat.START);
             return;
         }
@@ -129,6 +139,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putBoolean(ConstantManager.EDIT_MODE_KEY, mCurrentEditMode);
     }
 
 
@@ -174,5 +185,46 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 return false;
             }
         });
+    }
+
+    private void changeEditMode(boolean mode) {
+        for (EditText userValue : mUserInfoView) {
+            userValue.setEnabled(mode);
+            userValue.setFocusable(mode);
+            userValue.setFocusableInTouchMode(mode);
+        }
+        if (mode) {
+            mFab.setImageResource(R.drawable.ic_check_black_24dp);
+        } else {
+            mFab.setImageResource(R.drawable.ic_edit_black_24dp);
+            saveUserInfoValue();
+        }
+    }
+
+    private void loadUserInfoValue() {
+        List<String> userData = mDataManager.getPreferencesManager().loadUserProfileData();
+        for (int i = 0; i < userData.size(); i++) {
+            if (userData.get(i) == null) {
+                continue;
+            }
+            mUserInfoView.get(i).setText(userData.get(i));
+        }
+    }
+
+    private void saveUserInfoValue() {
+        List<String> userData = new ArrayList<>();
+        for (EditText userFieldView : mUserInfoView) {
+            userData.add(userFieldView.getText().toString());
+        }
+        mDataManager.getPreferencesManager().saveUserProfileData(userData);
+    }
+
+    private void setRoundedAvatar(){
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mHeaderLayout = mNavigationView.inflateHeaderView(R.layout.drawer_header);
+        mUserAvatar = (ImageView) mHeaderLayout.findViewById(R.id.user_avatar);
+        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
+        mRoundedAvatarDrawable = new RoundedAvatarDrawable(mBitmap);
+        mUserAvatar.setImageDrawable(mRoundedAvatarDrawable);
     }
 }

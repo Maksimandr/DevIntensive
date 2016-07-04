@@ -14,9 +14,10 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
             style="@style/mpwc"
-            android:background="@color/color_primary"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:theme="@style/AppTheme.AppBarOverlay"
+            android:background="@color/color_primary">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
@@ -41,8 +42,64 @@
                     android:titleTextColor="@color/white"
                     app:layout_collapseMode="pin"/>
             </android.support.design.widget.CollapsingToolbarLayout>
-
         </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:id="@+id/user_score"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_112"
+            android:background="@color/grey"
+            android:orientation="horizontal"
+            app:layout_behavior="com.softdesign.devintensive.utils.UserScoreBehavior">
+
+            <LinearLayout
+                style="@style/info"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/info.num"
+                    android:text="5"/>
+
+                <TextView
+                    style="@style/info.txt"
+                    android:text="Рейтинг"/>
+            </LinearLayout>
+
+            <View
+                style="@style/v_line"/>
+
+            <LinearLayout
+                style="@style/info"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/info.num"
+                    android:text="5"/>
+
+                <TextView
+                    style="@style/info.txt"
+                    android:text="Написано строк кода"/>
+            </LinearLayout>
+
+            <View
+                style="@style/v_line"/>
+
+            <LinearLayout
+                style="@style/info"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/info.num"
+                    android:text="5"/>
+
+                <TextView
+                    style="@style/info.txt"
+                    android:text="Проектов"/>
+            </LinearLayout>
+        </LinearLayout>
 
         <android.support.v4.widget.NestedScrollView
             style="@style/mpwc"
@@ -51,63 +108,6 @@
             <LinearLayout
                 style="@style/mpwc"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_112"
-                    android:background="@color/grey"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        style="@style/info"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/info.num"
-                            android:text="5"/>
-
-                        <TextView
-                            style="@style/info.txt"
-                            android:text="Рейтинг"/>
-                    </LinearLayout>
-
-                    <View
-                        style="@style/v_line"
-                        android:background="@color/grey_light"/>
-
-                    <LinearLayout
-                        style="@style/info"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/info.num"
-                            android:text="5"/>
-
-                        <TextView
-                            style="@style/info.txt"
-                            android:text="Написано строк кода"/>
-                    </LinearLayout>
-
-                    <View
-                        style="@style/v_line"
-                        android:background="@color/grey_light"/>
-
-                    <LinearLayout
-                        style="@style/info"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/info.num"
-                            android:text="5"/>
-
-                        <TextView
-                            style="@style/info.txt"
-                            android:text="Проектов"/>
-                    </LinearLayout>
-                </LinearLayout>
 
                 <LinearLayout
                     style="@style/mpwc"
@@ -126,14 +126,15 @@
                             style="@style/mpwc">
 
                             <EditText
+                                android:id="@+id/phone_et"
                                 style="@style/data"
                                 android:hint="@string/hint1"
-                                android:text="@string/mobile"/>
+                                android:inputType="phone"
+                                android:text="@string/phone"/>
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
 
                     <ImageView
-                        android:id="@+id/call_img"
                         style="@style/icon.right"
                         android:src="@drawable/ic_phone_in_talk_black_24dp"/>
                 </LinearLayout>
@@ -161,8 +162,10 @@
                             style="@style/mpwc">
 
                             <EditText
+                                android:id="@+id/email_et"
                                 style="@style/data"
                                 android:hint="@string/hint2"
+                                android:inputType="textEmailAddress"
                                 android:text="@string/email"/>
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
@@ -195,6 +198,7 @@
                             style="@style/mpwc">
 
                             <EditText
+                                android:id="@+id/vk_et"
                                 style="@style/data"
                                 android:hint="@string/hint3"
                                 android:text="@string/vk"/>
@@ -229,8 +233,10 @@
                             style="@style/mpwc">
 
                             <EditText
+                                android:id="@+id/github_et"
                                 style="@style/data"
                                 android:hint="@string/hint4"
+                                android:inputType="textMultiLine"
                                 android:text="@string/github"/>
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
@@ -263,6 +269,7 @@
                             style="@style/mpwc">
 
                             <EditText
+                                android:id="@+id/bio_et"
                                 style="@style/data"
                                 android:hint="@string/hint5"
                                 android:inputType="textMultiLine"
@@ -274,6 +281,15 @@
 
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/fab_right_space"
+            android:src="@drawable/ic_edit_black_24dp"
+            app:layout_anchor="@id/appbar_layout"
+            app:layout_anchorGravity="bottom|right"/>
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
@@ -282,6 +298,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/drawer_menu">
-
     </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>
