@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="172dp"
+                android:layout_height="@dimen/drawer_header_height_172"
                 android:paddingBottom="@dimen/space_8"
                 android:paddingLeft="@dimen/space_16"
                 android:paddingRight="@dimen/space_16"
@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/user_avatar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/avatar_60"
+        android:layout_height="@dimen/avatar_60"
         android:layout_marginTop="@dimen/space_16"/>
 
     <LinearLayout

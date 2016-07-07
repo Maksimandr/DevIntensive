@@ -1,0 +1,59 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/user_score"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/user_score_height"
+    android:background="@color/grey"
+    android:orientation="horizontal"
+    android:visibility="visible"
+    app:layout_behavior="com.softdesign.devintensive.utils.UserScoreBehavior">
+
+    <LinearLayout
+        style="@style/info"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/info.num"
+            android:text="@string/user_score.rating"/>
+
+        <TextView
+            style="@style/info.txt"
+            android:text="@string/user_score.rating.txt"/>
+    </LinearLayout>
+
+    <View
+        style="@style/v_line"/>
+
+    <LinearLayout
+        style="@style/info"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/info.num"
+            android:text="@string/user_score.codelines"/>
+
+        <TextView
+            style="@style/info.txt"
+            android:text="@string/user_score.codelines.txt"/>
+    </LinearLayout>
+
+    <View
+        style="@style/v_line"/>
+
+    <LinearLayout
+        style="@style/info"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/info.num"
+            android:text="@string/user_score.projects"/>
+
+        <TextView
+            style="@style/info.txt"
+            android:text="@string/user_score.projects.txt"/>
+    </LinearLayout>
+</LinearLayout>

@@ -8,12 +8,26 @@
     <string name="phone">+7 (917) 971-11-11</string>
     <string name="email">Makweb@yandex.ru</string>
     <string name="vk">vk.com/zaripovmaksim</string>
-    <string name="github">github.com/Maksimandr/DevIntensive</string>
+    <string name="git">github.com/Maksimandr/DevIntensive</string>
     <string name="bio">Через двадцать лет вы будете более сожалеть о том, чего НЕ СДЕЛАЛИ, чем о том, что вы СДЕЛАЛИ. Поэтому, отбросьте сомнения. Уплывайте прочь от безопасной гавани. Поймайте попутный ветер своими парусами. Исследуйте. Мечтайте. Открывайте. Марк Твен.</string>
     <string name="just_launch">активити запускается впервые</string>
     <string name="already_launched">активити уже создавалось</string>
     <string name="menu_my_profile">Мой профиль</string>
     <string name="user_name">Зарипов Максим</string>
     <string name="menu_team">Команда</string>
+    <string name="user_profile.placeholder.image">Изменить фотографию профиля</string>
+    <string name="user_score.rating.txt">Рейтинг</string>
+    <string name="user_score.rating">5</string>
+    <string name="user_score.codelines.txt">Написано строк кода</string>
+    <string name="user_score.codelines">5</string>
+    <string name="user_score.projects.txt">Проектов</string>
+    <string name="user_score.projects">5</string>
+    <string name="user_profile.dialog.gallery">Загрузить из галлереи</string>
+    <string name="user_profile.dialog.camera">Сделать снимок</string>
+    <string name="user_profile.dialog.cancel">Отмена</string>
+    <string name="user_profile.dialog.title">Изменить фотографию профиля</string>
+    <string name="user_profile.chooser.message">Выберите фото</string>
+    <string name="permition_request.message">Для корректной работы приложения необходимо дать требуемые разрешения</string>
+    <string name="permition_request.button">Разрешить</string>
 
 </resources>

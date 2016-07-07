@@ -15,6 +15,9 @@ public class BaseActivity extends AppCompatActivity {
     public final String TAG = ConstantManager.TAG_PREFIX + "BaseActivity";
     protected ProgressDialog mProgressDialog;
 
+    /**
+     * Показывает ProgressDialog и блокирует работу с экраном
+     */
     public void showProgress() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this, R.style.custom_dialog);
@@ -26,20 +29,33 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Прячет message ProgressDialog
+     */
     public void hideProgress() {
         if (mProgressDialog != null) {
-            if(mProgressDialog.isShowing()){
+            if (mProgressDialog.isShowing()) {
                 mProgressDialog.hide();
             }
         }
 
     }
 
+    /**
+     * Показывает message в Log
+     *
+     * @param message
+     */
     public void showError(String message, Exception error) {
         showToast(message);
         Log.e(TAG, String.valueOf(error));
     }
 
+    /**
+     * Показывает message в Toast
+     *
+     * @param message
+     */
     public void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }

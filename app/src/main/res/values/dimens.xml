@@ -27,7 +27,6 @@
     <dimen name="size_96">96dp</dimen>
     <dimen name="size_104">104dp</dimen>
     <dimen name="size_112">112dp</dimen>
-    <dimen name="profile_image_size_256">256dp</dimen>
 
     <!-- font sizes -->
     <dimen name="font_12">12sp</dimen>
@@ -45,5 +44,11 @@
     <dimen name="line_2">2dp</dimen>
 
     <dimen name="fab_right_space">8dp</dimen>
+    <dimen name="drawer_header_height_172">172dp</dimen>
+    <dimen name="user_score_height">112dp</dimen>
+    <dimen name="profile_image_size_256">256dp</dimen>
+    <dimen name="placeholder_foto_size_90">90dp</dimen>
+    <dimen name="avatar_60">60dp</dimen>
+
 
 </resources>
