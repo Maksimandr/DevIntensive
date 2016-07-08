@@ -19,6 +19,10 @@ public class PreferencesManager {
         mSharedPreferences = DevintensiveAplication.getSharedPreferences();
     }
 
+    /**
+     * Сохраняет данные с информацией о пользователе
+     * @param userFields список с информацией о пользователе
+     */
     public void saveUserProfileData(List<String> userFields) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
@@ -28,6 +32,10 @@ public class PreferencesManager {
         editor.apply();
     }
 
+    /**
+     * Загружает данные с информацией о пользователе
+     * @return список с информацией о пользователе
+     */
     public List<String> loadUserProfileData() {
         List<String> userFields = new ArrayList<>();
         for (int i = 0; i < USER_FIELDS.length; i++) {
@@ -36,13 +44,21 @@ public class PreferencesManager {
         return userFields;
     }
 
+    /**
+     * Сохраняет указатель на файл с фото для профиля пользователя
+     * @param uri указатель на файл с фото
+     */
     public void saveUserPhoto(Uri uri){
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(ConstantManager.USER_PHOTO_KEY, uri.toString());
         editor.apply();
     }
 
+    /**
+     * Загружает указатель на файл с фото для профиля пользователя
+     * @return указатель на файл с фото
+     */
     public Uri loadUserPhoto(){
-        return Uri.parse(mSharedPreferences.getString(ConstantManager.USER_PHOTO_KEY, "android.resource://com.softdesign.devintensive/drawable/userphoto"));
+        return Uri.parse(mSharedPreferences.getString(ConstantManager.USER_PHOTO_KEY, "android.resource://com.softdesign.devintensive/drawable/user_bg"));
     }
 }

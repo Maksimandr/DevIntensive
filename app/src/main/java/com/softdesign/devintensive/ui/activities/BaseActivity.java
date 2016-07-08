@@ -44,7 +44,7 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * Показывает message в Log
      *
-     * @param message
+     * @param message выводимое соотбщение
      */
     public void showError(String message, Exception error) {
         showToast(message);
@@ -54,7 +54,7 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * Показывает message в Toast
      *
-     * @param message
+     * @param message выводимое соотбщение
      */
     public void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();

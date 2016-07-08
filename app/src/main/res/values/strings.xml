@@ -16,12 +16,12 @@
     <string name="user_name">Зарипов Максим</string>
     <string name="menu_team">Команда</string>
     <string name="user_profile.placeholder.image">Изменить фотографию профиля</string>
-    <string name="user_score.rating.txt">Рейтинг</string>
-    <string name="user_score.rating">5</string>
-    <string name="user_score.codelines.txt">Написано строк кода</string>
-    <string name="user_score.codelines">5</string>
-    <string name="user_score.projects.txt">Проектов</string>
-    <string name="user_score.projects">5</string>
+    <string name="user_stat.rating.txt">Рейтинг</string>
+    <string name="user_stat.rating">5</string>
+    <string name="user_stat.codelines.txt">Написано строк кода</string>
+    <string name="user_stat.codelines">5</string>
+    <string name="user_stat.projects.txt">Проектов</string>
+    <string name="user_stat.projects">5</string>
     <string name="user_profile.dialog.gallery">Загрузить из галлереи</string>
     <string name="user_profile.dialog.camera">Сделать снимок</string>
     <string name="user_profile.dialog.cancel">Отмена</string>
@@ -29,5 +29,19 @@
     <string name="user_profile.chooser.message">Выберите фото</string>
     <string name="permition_request.message">Для корректной работы приложения необходимо дать требуемые разрешения</string>
     <string name="permition_request.button">Разрешить</string>
+    <string name="login_title">ВОЙТИ</string>
+    <string name="login_email">E-mail</string>
+    <string name="login_password">Пароль</string>
+    <string name="login_button">ВОЙТИ</string>
+    <string name="login_remind_password">Забыли пароль?</string>
+    <string name="check_input.phone.symbols">Допустимые символы: 0-9, +, -, (, ), пробел</string>
+    <string name="check_input.phone.length">Длина номера телефона от 11 до 20 символов</string>
+    <string name="check_input.email">Минимальное число символов перед @ - 3, перед точкой - 2, домен - 2</string>
+    <string name="check_input.vk">Адрес должен начинаться с vk.com/</string>
+    <string name="check_input.git">Адрес должен начинаться с github.com/</string>
+    <string name="url_vk.com">vk.com/</string>
+    <string name="url_github.com">github.com/</string>
+    <string name="check_input.vk.nopage">Укажите свою страницу VK</string>
+    <string name="check_input.git.norepo">Укажите свой репозиторий в GIT</string>
 
 </resources>

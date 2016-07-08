@@ -10,12 +10,12 @@ import android.widget.LinearLayout;
 import com.softdesign.devintensive.ui.activities.MainActivity;
 
 
-public class UserScoreBehavior extends CoordinatorLayout.Behavior<LinearLayout> {
+public class UserStatisticBehavior extends CoordinatorLayout.Behavior<LinearLayout> {
 
-    public UserScoreBehavior() {
+    public UserStatisticBehavior() {
     }
 
-    public UserScoreBehavior(Context context, AttributeSet attrs) {
+    public UserStatisticBehavior(Context context, AttributeSet attrs) {
     }
 
     /**

@@ -103,6 +103,7 @@
                         android:id="@+id/vk_et"
                         style="@style/data"
                         android:hint="@string/hint3"
+                        android:inputType="textUri"
                         android:text="@string/vk"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -139,7 +140,7 @@
                         android:id="@+id/git_et"
                         style="@style/data"
                         android:hint="@string/hint4"
-                        android:inputType="textMultiLine"
+                        android:inputType="textUri"
                         android:text="@string/git"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>

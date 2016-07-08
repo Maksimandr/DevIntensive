@@ -1,13 +1,13 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/user_score"
+    android:id="@+id/user_stat"
     android:layout_width="match_parent"
     android:layout_height="@dimen/user_score_height"
     android:background="@color/grey"
     android:orientation="horizontal"
     android:visibility="visible"
-    app:layout_behavior="com.softdesign.devintensive.utils.UserScoreBehavior">
+    app:layout_behavior="com.softdesign.devintensive.utils.UserStatisticBehavior">
 
     <LinearLayout
         style="@style/info"
@@ -16,11 +16,11 @@
 
         <TextView
             style="@style/info.num"
-            android:text="@string/user_score.rating"/>
+            android:text="@string/user_stat.rating"/>
 
         <TextView
             style="@style/info.txt"
-            android:text="@string/user_score.rating.txt"/>
+            android:text="@string/user_stat.rating.txt"/>
     </LinearLayout>
 
     <View
@@ -33,11 +33,11 @@
 
         <TextView
             style="@style/info.num"
-            android:text="@string/user_score.codelines"/>
+            android:text="@string/user_stat.codelines"/>
 
         <TextView
             style="@style/info.txt"
-            android:text="@string/user_score.codelines.txt"/>
+            android:text="@string/user_stat.codelines.txt"/>
     </LinearLayout>
 
     <View
@@ -50,10 +50,10 @@
 
         <TextView
             style="@style/info.num"
-            android:text="@string/user_score.projects"/>
+            android:text="@string/user_stat.projects"/>
 
         <TextView
             style="@style/info.txt"
-            android:text="@string/user_score.projects.txt"/>
+            android:text="@string/user_stat.projects.txt"/>
     </LinearLayout>
 </LinearLayout>

@@ -92,4 +92,46 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="login_form">
+        <item name="android:layout_width">240dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/space_24</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="login_title" parent="mpwc">
+        <item name="android:layout_marginBottom">@dimen/space_16</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/color_accent</item>
+        <item name="android:textSize">@dimen/font_20</item>
+    </style>
+
+    <style name="login_input" parent="mpwc">
+        <item name="android:textColorHint">@color/grey_light</item>
+    </style>
+
+    <style name="login_ed" parent="mpwc">
+        <item name="android:layout_marginBottom">@dimen/space_16</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="login_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/size_32</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginBottom">@dimen/space_16</item>
+        <item name="android:layout_marginLeft">@dimen/space_32</item>
+        <item name="android:layout_marginRight">@dimen/space_32</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="login_reminder" parent="mpwc">
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/grey_light</item>
+    </style>
+
 </resources>
