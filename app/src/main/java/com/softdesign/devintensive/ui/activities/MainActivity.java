@@ -300,19 +300,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     /**
-     * Используется для задержки
-     */
-    private void RanWithDelay() {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hideProgress();
-            }
-        }, 5000);
-    }
-
-    /**
      * Задает Toolbar и заменяет им Actionbar
      */
     private void setupToolbar() {
