@@ -152,18 +152,41 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     * Метод вызывается непосредственно перед тем, как активность становится видимой пользователю
+     * Чтение из базы данных
+     * Запуск сложной анимации
+     * Запуск потоков, отслеживания показаний датчиков, запросов к GPS, таймеров, сервисов или других процессов,
+     * которые нужны исключительно для обновления пользовательского интерфейса
+     */
     @Override
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart");
     }
 
+    /**
+     * Метод вызывается после onStart().Также может вызываться послеonPause().
+     * запуск воспроизведения анимации, аудио и видео
+     * инициализации компонентов
+     * регистрации любых широковещательных приемников или других процессов, которые вы освободили/приостановили вonPause()
+     * выполнение любых другие инициализации, которые должны происходить, когда активность вновь активна (камера).
+     */
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
     }
 
+    /**
+     * Метод вызывается после сворачивания текущей активности или перехода к новому.
+     * От onPause()можно перейти к вызову либо onResume(), либо onStop().
+     * <p/>
+     * остановка анимации, аудио и видео
+     * фиксация несохраненных данных (легкие процессы)
+     * освобождение системных ресурсов
+     * остановка сервисов, подписок, широковещательных сообщений
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -171,18 +194,41 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         saveUserInfoValue();
     }
 
+    /**
+     * Метод вызывается, когда окно становится невидимым для пользователя.
+     * Это может произойти при её уничтожении, или если была запущена другая активность (существующая или новая),
+     * перекрывшая окно текущей активности.
+     * <p/>
+     * запись в базу данных
+     * приостановка сложной анимации
+     * приостановка потоков, отслеживания показаний датчиков, запросов к GPS, таймеров,
+     * сервисов или других процессов, которые нужны исключительно для обновления пользовательского интерфейса
+     */
     @Override
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop");
     }
 
+    /**
+     * Метод вызывается по окончании работы активности, при вызове методаfinish()или в случае, когда система уничтожает этот экземпляр активности для освобождения ресурсов.
+     * <p/>
+     * высвобождение ресурсов
+     * дополнительная перестраховка если ресурсы не были выгружены или процессы не были остановлены ранее
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
     }
 
+    /**
+     * Если окно возвращается в приоритетный режим после вызоваonStop(), то в этом случае вызывается методonRestart().
+     * Т.е. вызывается после того, как активность была остановлена и снова была запущена пользователем.
+     * Всегда сопровождается вызовом метода onStart().
+     * <p/>
+     * используется для специальных действий, которые должны выполняться только при повторном запуске активности
+     */
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -191,6 +237,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     /**
      * Обрабатывает нажатия на экран
+     *
      * @param v view на которое произшло нажатие
      */
     @Override
@@ -269,8 +316,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * Получение результата из другой Activity (получает фото для профиля пользователя)
      *
      * @param requestCode идентификатор запроса
-     * @param resultCode код результата запроса
-     * @param data возвращённые данные
+     * @param resultCode  код результата запроса
+     * @param data        возвращённые данные
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -475,8 +522,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     /**
      * Обрабатывает результат запросов на доступ к внешней памяти и камере
-     * @param requestCode идентификатор запроса
-     * @param permissions разрешения
+     *
+     * @param requestCode  идентификатор запроса
+     * @param permissions  разрешения
      * @param grantResults код результата
      */
     @Override
@@ -485,7 +533,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 loadPhotoFromGallery();
             }
-        } else if (requestCode == ConstantManager.CAMERA_REQUEST_PERMITION_CODE){
+        } else if (requestCode == ConstantManager.CAMERA_REQUEST_PERMITION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 loadPhotoFromCamera();
             }
@@ -545,6 +593,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     /**
      * Создает меню выбора источника для получения фото для профиля пользователя
+     *
      * @param id идентификатор
      * @return объект Dialog
      */
@@ -581,6 +630,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     /**
      * Создает новый файл для сохранения в него фото полученного с камеры
+     *
      * @return объект File
      * @throws IOException
      */
@@ -603,6 +653,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     /**
      * Вставляет изображение в профиль пользователя
+     *
      * @param selectedImage изображение для профиля пользователя
      */
     private void insertProfileImage(Uri selectedImage) {
@@ -623,6 +674,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     /**
      * Выполняет проверку данных, введенных пользователем в профиль
+     *
      * @return true если данные корректные
      */
     private boolean checkInputUserData() {
@@ -631,6 +683,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     /**
      * Выполняет проверку данных, введенных пользователем в поле телефона, на соответствие шаблону
+     *
      * @return true если данные корректные
      */
     private boolean checkInputPhone() {
@@ -650,16 +703,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
 
         mUserInfoView.get(0).requestFocus();
-        showToast(message);
+        mUserInfoView.get(0).setError(message);
         return false;
     }
 
     /**
      * Выполняет проверку данных, введенных пользователем в поле почты, на соответствие шаблону
+     *
      * @return true если данные корректные
      */
     private boolean checkInputEmail() {
         String email = mUserInfoView.get(1).getText().toString();
+        String message;
 
         String[] hostPart = email.split("@");
         if (hostPart.length == 2) {
@@ -670,13 +725,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
         }
+        message = getString(R.string.check_input_email);
         mUserInfoView.get(1).requestFocus();
-        showToast(getString(R.string.check_input_email));
+        mUserInfoView.get(1).setError(message);
         return false;
     }
 
     /**
      * Выполняет проверку данных, введенных пользователем в поле страницы в ВК, на соответствие шаблону
+     *
      * @return true если данные корректные
      */
     private boolean checkInputVk() {
@@ -699,12 +756,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
 
         mUserInfoView.get(2).requestFocus();
-        showToast(message);
+        mUserInfoView.get(2).setError(message);
         return false;
     }
 
     /**
      * Выполняет проверку данных, введенных пользователем в поле репозитория GIT, на соответствие шаблону
+     *
      * @return true если данные корректные
      */
     private boolean checkInputGit() {
@@ -727,7 +785,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
 
         mUserInfoView.get(3).requestFocus();
-        showToast(message);
+        mUserInfoView.get(3).setError(message);
         return false;
     }
 }
