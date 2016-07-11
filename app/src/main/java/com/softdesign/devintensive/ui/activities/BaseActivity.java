@@ -12,22 +12,9 @@ import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.utils.ConstantManager;
 
 public class BaseActivity extends AppCompatActivity {
+
     public final String TAG = ConstantManager.TAG_PREFIX + "BaseActivity";
     protected ProgressDialog mProgressDialog;
-
-    /**
-     * Показывает ProgressDialog и блокирует работу с экраном
-     */
-    public void showProgress() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this, R.style.custom_dialog);
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-        mProgressDialog.show();
-        mProgressDialog.setContentView(R.layout.progress_splash);
-
-    }
 
     /**
      * Прячет message ProgressDialog
