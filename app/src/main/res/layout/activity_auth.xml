@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_coordinator_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:ignore="contentDescription">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_background">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/login_bg"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/authorization_box"
+            style="@style/authorization_box"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/mpwc"
+                    android:layout_marginBottom="@dimen/space_16"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/space_32">
+
+                    <View
+                        android:id="@+id/login_indicator"
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="20dp"
+                        android:background="@color/color_accent"/>
+
+                    <TextView
+                        style="@style/login_txt"
+                        android:text="@string/login_txt"
+                        android:textSize="@dimen/font_20"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/mpwc"
+                    android:layout_gravity="bottom"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/space_24"
+                    android:paddingLeft="@dimen/space_24"
+                    android:paddingRight="@dimen/space_24">
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/wrap_login_email"
+                        style="@style/mpwc">
+
+                        <EditText
+                            android:id="@+id/login_email_et"
+                            style="@style/login_ed"
+                            android:hint="@string/login_email"
+                            android:inputType="textEmailAddress"
+                            android:text="Softdesign@mail.ru"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/mpwc">
+
+                        <EditText
+                            android:id="@+id/login_password_et"
+                            style="@style/login_ed"
+                            android:layout_marginBottom="@dimen/space_24"
+                            android:hint="@string/login_password"
+                            android:inputType="textPassword"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/login_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/space_16"
+                        android:minWidth="126dp"
+                        android:textAllCaps="true"
+                        android:text="@string/login_button"
+                        android:theme="@style/AppTheme.Button.Red"/>
+
+                    <TextView
+                        android:id="@+id/remember_txt"
+                        style="@style/login_reminder"
+                        android:text="@string/login_remind_password"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>
