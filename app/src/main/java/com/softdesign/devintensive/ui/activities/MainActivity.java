@@ -1,5 +1,6 @@
 package com.softdesign.devintensive.ui.activities;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,7 +11,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -43,7 +43,6 @@ import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.managers.DataManager;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.softdesign.devintensive.utils.RoundedAvatarDrawable;
-import com.softdesign.devintensive.utils.UserStatisticBehavior;
 
 import com.squareup.picasso.Picasso;
 
@@ -69,7 +68,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private File mPhotoFile = null;
     private Uri mSelectedImage = null;
     private DataManager mDataManager;
-    private UserStatisticBehavior mUserStatBehavior;
 
     @BindView(R.id.main_coordinator_container)
     CoordinatorLayout mCoordinatorLayout;
@@ -93,8 +91,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     NestedScrollView mNestedScrollView;
     @BindView(R.id.appbar_layout)
     AppBarLayout mAppBarLayout;
-    @BindView(R.id.login_button)
-    TextView mLoginButton;
 
     private View mHeaderLayout;
     private ImageView mUserAvatar;
@@ -136,7 +132,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         mFab.setOnClickListener(this);
         mProfilePlaceholder.setOnClickListener(this);
-        mLoginButton.setOnClickListener(this);
 
         setupToolbar();
         setupDrawer();
@@ -243,11 +238,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.login_button:
-                findViewById(R.id.login_layout).setVisibility(View.GONE);
-                findViewById(R.id.main_coordinator_container).setVisibility(View.VISIBLE);
-                break;
-
             case R.id.fab:
                 changeEditMode();
                 break;
@@ -355,10 +345,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         mAppBarParams = (AppBarLayout.LayoutParams) mCollapsingToolbar.getLayoutParams();
 
-        mUserStatBehavior = new UserStatisticBehavior();
-        mCoordinatorLayoutParams = (CoordinatorLayout.LayoutParams) mUserStat.getLayoutParams();
-        mCoordinatorLayoutParams.setBehavior(mUserStatBehavior);
-
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -403,7 +389,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mFab.setImageResource(R.drawable.ic_check_black_24dp);
 
             showProfilePlaceholder();
-            hideUserScore();
+            hideUserStat();
             lockToolbar();
             mCollapsingToolbar.setExpandedTitleColor(Color.TRANSPARENT);
 
@@ -417,7 +403,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mFab.setImageResource(R.drawable.ic_edit_black_24dp);
 
             hideProfilePlaceholder();
-            showUserScore();
+            showUserStat();
             unlockToolbar();
             mCollapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.white));
 
@@ -453,7 +439,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * Запрашивает разрешение на доступ к внешней памяти и фото для профиля пользователя из галлереи
      */
     private void loadPhotoFromGallery() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
             Intent takeGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
@@ -462,7 +448,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         } else {
             ActivityCompat.requestPermissions(this, new String[]{
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
             }, ConstantManager.EXTERNAL_STORAGE_REQUEST_PERMITION_CODE);
 
             Snackbar.make(mCoordinatorLayout, R.string.permition_request_message, Snackbar.LENGTH_LONG)
@@ -481,8 +467,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      */
     private void loadPhotoFromCamera() {
 
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
             Intent takeCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -498,14 +484,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         } else {
             String[] permissions;
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED &&
-                    ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                permissions = new String[]{android.Manifest.permission.CAMERA};
-            } else if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                permissions = new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED &&
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                permissions = new String[]{Manifest.permission.CAMERA};
+            } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
             } else {
-                permissions = new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
             }
 
             ActivityCompat.requestPermissions(this, permissions, ConstantManager.CAMERA_REQUEST_PERMITION_CODE);
@@ -543,21 +529,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     /**
      * Скрывает раздел со статистикой пользователя (во время редактирования данных профиля)
      */
-    private void hideUserScore() {
-        mCoordinatorLayoutParams.setBehavior(null);
-        mCoordinatorLayoutParams.height = 0;
-        mNestedScrollView.setPadding(mNestedScrollView.getPaddingLeft(), 0, mNestedScrollView.getPaddingRight(), mNestedScrollView.getPaddingBottom());
+    private void hideUserStat() {
+        mUserStat.setVisibility(View.GONE);
     }
 
     /**
      * Показывает раздел со статистикой пользователя
      */
-    private void showUserScore() {
-        mCoordinatorLayoutParams.setBehavior(mUserStatBehavior);
-
-        mUserStat.setY(mNestedScrollView.getY());
-        mCoordinatorLayoutParams.height = (int) (mNestedScrollView.getY() * 0.227 + 107.776);
-        mNestedScrollView.setPadding(mNestedScrollView.getPaddingLeft(), mCoordinatorLayoutParams.height, mNestedScrollView.getPaddingRight(), mNestedScrollView.getPaddingBottom());
+    private void showUserStat() {
+        mUserStat.setVisibility(View.VISIBLE);
     }
 
     /**

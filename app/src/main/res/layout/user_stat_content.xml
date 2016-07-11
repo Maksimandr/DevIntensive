@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/user_stat"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/user_score_height"
+    android:layout_height="@dimen/user_stat_height"
     android:background="@color/grey"
     android:orientation="horizontal"
     android:visibility="visible"
-    app:layout_behavior="com.softdesign.devintensive.utils.UserStatisticBehavior">
+    app:behavior_min_height="@dimen/size_56"
+    app:layout_behavior=".ui.behaviors.UserStatisticBehavior">
 
     <LinearLayout
         style="@style/info"

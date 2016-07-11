@@ -29,7 +29,7 @@
     <string name="user_profile.chooser.message">Выберите фото</string>
     <string name="permition_request.message">Для корректной работы приложения необходимо дать требуемые разрешения</string>
     <string name="permition_request.button">Разрешить</string>
-    <string name="login_title">ВОЙТИ</string>
+    <string name="login_txt">ВОЙТИ</string>
     <string name="login_email">E-mail</string>
     <string name="login_password">Пароль</string>
     <string name="login_button">ВОЙТИ</string>

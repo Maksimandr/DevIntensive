@@ -2,13 +2,10 @@ package com.softdesign.devintensive.ui.activities;
 
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.utils.ConstantManager;
 
 public class BaseActivity extends AppCompatActivity {

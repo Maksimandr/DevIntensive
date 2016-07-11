@@ -45,7 +45,7 @@
 
     <dimen name="fab_right_space">8dp</dimen>
     <dimen name="drawer_header_height_172">172dp</dimen>
-    <dimen name="user_score_height">112dp</dimen>
+    <dimen name="user_stat_height">112dp</dimen>
     <dimen name="profile_image_size_256">256dp</dimen>
     <dimen name="placeholder_foto_size_90">90dp</dimen>
     <dimen name="avatar_60">60dp</dimen>
