@@ -6,7 +6,7 @@
     <string name="hint4">Репозиторий</string>
     <string name="hint5">О себе</string>
     <string name="phone">+7 (917) 971-11-11</string>
-    <string name="email">Makweb@yandex.ru</string>
+    <string name="email">maksimandr@yandex.ru</string>
     <string name="vk">vk.com/zaripovmaksim</string>
     <string name="git">github.com/Maksimandr/DevIntensive</string>
     <string name="bio">Через двадцать лет вы будете более сожалеть о том, чего НЕ СДЕЛАЛИ, чем о том, что вы СДЕЛАЛИ. Поэтому, отбросьте сомнения. Уплывайте прочь от безопасной гавани. Поймайте попутный ветер своими парусами. Исследуйте. Мечтайте. Открывайте. Марк Твен.</string>
@@ -18,8 +18,8 @@
     <string name="user_profile.placeholder.image">Изменить фотографию профиля</string>
     <string name="user_stat.rating.txt">Рейтинг</string>
     <string name="user_stat.rating">5</string>
-    <string name="user_stat.codelines.txt">Написано строк кода</string>
-    <string name="user_stat.codelines">5</string>
+    <string name="user_stat.code.lines.txt">Написано строк кода</string>
+    <string name="user_stat.code.lines">5</string>
     <string name="user_stat.projects.txt">Проектов</string>
     <string name="user_stat.projects">5</string>
     <string name="user_profile.dialog.gallery">Загрузить из галлереи</string>

@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/user_stat_rating"
             style="@style/info.num"
             android:text="@string/user_stat.rating"/>
 
@@ -33,12 +34,13 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/user_stat_code_lines"
             style="@style/info.num"
-            android:text="@string/user_stat.codelines"/>
+            android:text="@string/user_stat.code.lines"/>
 
         <TextView
             style="@style/info.txt"
-            android:text="@string/user_stat.codelines.txt"/>
+            android:text="@string/user_stat.code.lines.txt"/>
     </LinearLayout>
 
     <View
@@ -50,6 +52,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/user_stat_projects"
             style="@style/info.num"
             android:text="@string/user_stat.projects"/>
 

@@ -140,7 +140,7 @@
                         android:id="@+id/git_et"
                         style="@style/data"
                         android:hint="@string/hint4"
-                        android:inputType="textUri"
+                        android:inputType="textUri|textMultiLine"
                         android:text="@string/git"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>

@@ -70,7 +70,7 @@
                             style="@style/login_ed"
                             android:hint="@string/login_email"
                             android:inputType="textEmailAddress"
-                            android:text="Softdesign@mail.ru"/>
+                            android:text="@string/email"/>
 
                     </android.support.design.widget.TextInputLayout>
 
