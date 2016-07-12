@@ -158,9 +158,9 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
 
         mDataManager.getPreferencesManager().saveUserProfileFields(userFields);
 
-        if(mDataManager.getPreferencesManager().getUserPhotoUpdated().compareToIgnoreCase(userModel.getData().getUser().getPublicInfo().getUpdated())<0){
+//        if(mDataManager.getPreferencesManager().getUserPhotoUpdated().compareToIgnoreCase(userModel.getData().getUser().getPublicInfo().getUpdated())<0){
             mDataManager.getPreferencesManager().saveUserPhoto(Uri.parse(userModel.getData().getUser().getPublicInfo().getPhoto()), userModel.getData().getUser().getPublicInfo().getUpdated());
-        }
+//        }
 
         mDataManager.getPreferencesManager().saveUserAvatar(Uri.parse(userModel.getData().getUser().getPublicInfo().getAvatar()));
     }

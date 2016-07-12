@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
@@ -49,6 +50,12 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.io.File;
 import java.io.IOException;
@@ -107,7 +114,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private List<ImageView> mUserInfoImgAct;
 
     private AppBarLayout.LayoutParams mAppBarParams = null;
-    private CoordinatorLayout.LayoutParams mCoordinatorLayoutParams = null;
 
 
     @Override
@@ -420,8 +426,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mFab.setImageResource(R.drawable.ic_check_black_24dp);
 
             showProfilePlaceholder();
-            hideUserStat();
+//            hideUserStat();
             lockToolbar();
+
             mCollapsingToolbar.setExpandedTitleColor(Color.TRANSPARENT);
 
             mUserInfoViews.get(0).requestFocus();
@@ -434,11 +441,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mFab.setImageResource(R.drawable.ic_edit_black_24dp);
 
             hideProfilePlaceholder();
-            showUserStat();
+//            showUserStat();
             unlockToolbar();
             mCollapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.white));
 
             saveUserFields();
+            uploadUserPhoto();
         }
     }
 
@@ -578,20 +586,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     /**
      * Скрывает раздел со статистикой пользователя (во время редактирования данных профиля)
      */
-    private void hideUserStat() {
-        Log.d(TAG, "hideUserStat");
-
-        mUserStat.setVisibility(View.GONE);
-    }
+//    private void hideUserStat() {
+//        Log.d(TAG, "hideUserStat");
+//
+//        mUserStat.setVisibility(View.GONE);
+//    }
 
     /**
      * Показывает раздел со статистикой пользователя
      */
-    private void showUserStat() {
-        Log.d(TAG, "showUserStat");
-
-        mUserStat.setVisibility(View.VISIBLE);
-    }
+//    private void showUserStat() {
+//        Log.d(TAG, "showUserStat");
+//
+//        mUserStat.setVisibility(View.VISIBLE);
+//    }
 
     /**
      * Скрывает ProfilePlaceholder
@@ -854,29 +862,58 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return false;
     }
 
-//    private static final String IMGUR_CLIENT_ID = "...";
-//    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-//
-//    private final OkHttpClient client = new OkHttpClient();
-//
-//    public void run() throws Exception {
-//        // Use the imgur image upload API as documented at https://api.imgur.com/endpoints/image
-//        RequestBody requestBody = new MultipartBody.Builder()
-//                .setType(MultipartBody.FORM)
-//                .addFormDataPart("title", "Square Logo")
-//                .addFormDataPart("image", "logo-square.png",
-//                        RequestBody.create(MEDIA_TYPE_PNG, new File("website/static/logo-square.png")))
-//                .build();
-//
-//        Request request = new Request.Builder()
-//                .header("Authorization", "Client-ID " + IMGUR_CLIENT_ID)
-//                .url("https://api.imgur.com/3/image")
-//                .post(requestBody)
-//                .build();
-//
-//        Response response = client.newCall(request).execute();
-//        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-//
-//        System.out.println(response.body().string());
-//    }
+    public void uploadUserPhoto() {
+        Log.d(TAG, "uploadUserPhoto");
+
+        File file = null;
+        int column_index;
+        if (mSelectedImage.getScheme().equals("file")) {
+            Log.d(TAG, "uploadUserPhoto file");
+            file = new File(mSelectedImage.getPath());
+        }
+        if (mSelectedImage.getScheme().equals("content")) {
+            Log.d(TAG, "uploadUserPhoto content 1");
+            Cursor cursor = null;
+            Log.d(TAG, "uploadUserPhoto content 2");
+            try {
+                String[] projection = {MediaStore.Images.Media.DATA};
+                Log.d(TAG, "uploadUserPhoto content 3");
+                cursor = this.getContentResolver().query(mSelectedImage, projection, null, null, null);
+                Log.d(TAG, "uploadUserPhoto content 4");
+                column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                Log.d(TAG, "uploadUserPhoto content 5");
+                cursor.moveToFirst();
+                Log.d(TAG, "uploadUserPhoto content 6" + cursor.getString(column_index));
+                file = new File(cursor.getString(column_index));
+                Log.d(TAG, "uploadUserPhoto content 7");
+            } finally {
+                Log.d(TAG, "uploadUserPhoto content 8");
+                if (cursor != null) {
+                    Log.d(TAG, "uploadUserPhoto content 9");
+                    cursor.close();
+                }
+            }
+
+        }
+
+        Log.d(TAG, "1");
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+
+        Log.d(TAG, "2");
+        Call<ResponseBody> call = mDataManager.uploadUserPhoto(body);
+        Log.d(TAG, "3");
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call,
+                                   Response<ResponseBody> response) {
+                Log.d(TAG, "Upload success");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(TAG, "Upload error: " + t.getMessage());
+            }
+        });
+    }
 }

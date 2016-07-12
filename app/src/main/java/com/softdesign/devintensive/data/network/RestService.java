@@ -5,6 +5,7 @@ import com.softdesign.devintensive.data.network.req.UserLoginReq;
 import com.softdesign.devintensive.data.network.res.UserModelRes;
 
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
@@ -21,4 +22,7 @@ public interface RestService {
     @POST("login")
     Call<UserModelRes> loginUser(@Body UserLoginReq req);
 
+    @Multipart
+    @POST("user/{userId}/")
+    Call<ResponseBody> uploadUserPhoto(@Path("userId") String userId, @Part MultipartBody.Part photo);
 }
