@@ -23,6 +23,6 @@ public interface RestService {
     Call<UserModelRes> loginUser(@Body UserLoginReq req);
 
     @Multipart
-    @POST("user/{userId}/")
+    @POST("user/{userId}/publicValues/profilePhoto")
     Call<ResponseBody> uploadUserPhoto(@Path("userId") String userId, @Part MultipartBody.Part photo);
 }
