@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_72">
+
+    <TextView
+        android:id="@+id/git_hint_txt"
+        style="@style/data"
+        android:layout_marginTop="@dimen/space_8"
+        android:text="@string/hint4"/>
+
+    <TextView
+        android:id="@+id/git_txt"
+        style="@style/data"
+        android:layout_marginTop="@dimen/space_8"
+        android:text="@string/git"
+        android:layout_below="@+id/git_hint_txt"/>
+
+    <ImageView
+        android:id="@+id/git_iv"
+        style="@style/icon.right"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_visibility_black_24dp"/>
+
+</RelativeLayout>

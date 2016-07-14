@@ -156,9 +156,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initUserFields();
         initUserProfileStatistic();
 
+
         Picasso.with(this)
                 .load(mDataManager.getPreferencesManager().loadUserPhoto())
                 .placeholder(R.drawable.user_bg)
+                .error(R.drawable.user_bg)
+                .resize(getResources().getDimensionPixelSize(R.dimen.profile_image_size_256), getResources().getDimensionPixelSize(R.dimen.profile_image_size_256))
+                .centerCrop()
                 .into(mProfileImage);
 
         if (savedInstanceState != null) {
@@ -426,7 +430,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mFab.setImageResource(R.drawable.ic_check_black_24dp);
 
             showProfilePlaceholder();
-//            hideUserStat();
             lockToolbar();
 
             mCollapsingToolbar.setExpandedTitleColor(Color.TRANSPARENT);
@@ -441,12 +444,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mFab.setImageResource(R.drawable.ic_edit_black_24dp);
 
             hideProfilePlaceholder();
-//            showUserStat();
             unlockToolbar();
             mCollapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.white));
 
             saveUserFields();
-            uploadUserPhoto();
+            if (mSelectedImage != null) {
+                uploadUserPhoto(mSelectedImage);
+            }
+
         }
     }
 
@@ -584,24 +589,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     /**
-     * Скрывает раздел со статистикой пользователя (во время редактирования данных профиля)
-     */
-//    private void hideUserStat() {
-//        Log.d(TAG, "hideUserStat");
-//
-//        mUserStat.setVisibility(View.GONE);
-//    }
-
-    /**
-     * Показывает раздел со статистикой пользователя
-     */
-//    private void showUserStat() {
-//        Log.d(TAG, "showUserStat");
-//
-//        mUserStat.setVisibility(View.VISIBLE);
-//    }
-
-    /**
      * Скрывает ProfilePlaceholder
      */
     private void hideProfilePlaceholder() {
@@ -718,6 +705,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         Picasso.with(this)
                 .load(selectedImage)
+                .placeholder(R.drawable.user_bg)
+                .error(R.drawable.user_bg)
                 .resize(getResources().getDimensionPixelSize(R.dimen.profile_image_size_256), getResources().getDimensionPixelSize(R.dimen.profile_image_size_256))
                 .centerCrop()
                 .into(mProfileImage);
@@ -862,52 +851,39 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return false;
     }
 
-    public void uploadUserPhoto() {
+    public void uploadUserPhoto(Uri SelectedImage) {
         Log.d(TAG, "uploadUserPhoto");
 
         File file = null;
         int column_index;
-        if (mSelectedImage.getScheme().equals("file")) {
-            Log.d(TAG, "uploadUserPhoto file");
-            file = new File(mSelectedImage.getPath());
+        if (SelectedImage.getScheme().equals("file")) {
+            file = new File(SelectedImage.getPath());
         }
-        if (mSelectedImage.getScheme().equals("content")) {
-            Log.d(TAG, "uploadUserPhoto content 1");
+        if (SelectedImage.getScheme().equals("content")) {
             Cursor cursor = null;
-            Log.d(TAG, "uploadUserPhoto content 2");
             try {
                 String[] projection = {MediaStore.Images.Media.DATA};
-                Log.d(TAG, "uploadUserPhoto content 3");
-                cursor = this.getContentResolver().query(mSelectedImage, projection, null, null, null);
-                Log.d(TAG, "uploadUserPhoto content 4");
+                cursor = this.getContentResolver().query(SelectedImage, projection, null, null, null);
                 column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                Log.d(TAG, "uploadUserPhoto content 5");
                 cursor.moveToFirst();
-                Log.d(TAG, "uploadUserPhoto content 6" + cursor.getString(column_index));
                 file = new File(cursor.getString(column_index));
-                Log.d(TAG, "uploadUserPhoto content 7");
             } finally {
-                Log.d(TAG, "uploadUserPhoto content 8");
                 if (cursor != null) {
-                    Log.d(TAG, "uploadUserPhoto content 9");
                     cursor.close();
                 }
             }
 
         }
 
-        Log.d(TAG, "1");
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
 
-        Log.d(TAG, "2");
         Call<ResponseBody> call = mDataManager.uploadUserPhoto(body);
-        Log.d(TAG, "3");
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call,
                                    Response<ResponseBody> response) {
-                if(response.code() == 200) {
+                if (response.code() == 200) {
                     Log.d(TAG, "Upload success");
                 } else {
                     Log.d(TAG, "Upload FAIL!");

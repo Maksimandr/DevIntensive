@@ -19,8 +19,7 @@ public class HeaderInterceptor implements Interceptor{
         Request original = chain.request();
 
         Request.Builder requeqstBuilder = original.newBuilder()
-                .header("Content-Type", "application/json")
-                .header("X-Acces-Token", pm.getAuthToken())
+                .header("X-Access-Token", pm.getAuthToken())
                 .header("Request-User-Id", pm.getUserId())
                 .header("User-Agent", "DevIntensive");
 

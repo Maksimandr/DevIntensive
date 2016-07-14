@@ -27,6 +27,7 @@ public interface ConstantManager {
     String USER_CODE_LINES_VALUE = "USER_CODE_LINES_VALUE";
     String USER_PROJECT_VALUE = "USER_PROJECT_VALUE";
 
+
     int LOAD_PROFILE_PHOTO = 1;
 
     int REQUEST_CAMERA_PICTURE = 99;
@@ -38,5 +39,5 @@ public interface ConstantManager {
     int EXTERNAL_STORAGE_REQUEST_PERMISSION_CODE = 103;
 
 
-
+    String PARCELABLE_KEY = "PARCELABLE_KEY";
 }
