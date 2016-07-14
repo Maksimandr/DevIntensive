@@ -64,7 +64,7 @@ public class UserModelRes {
         private ProfileValues profileValues;
         @SerializedName("publicInfo")
         @Expose
-        private publicInfo publicInfo;
+        private PublicInfo publicInfo;
         @SerializedName("specialization")
         @Expose
         private String specialization;
@@ -96,7 +96,7 @@ public class UserModelRes {
             return contacts;
         }
 
-        public UserModelRes.publicInfo getPublicInfo() {
+        public UserModelRes.PublicInfo getPublicInfo() {
             return publicInfo;
         }
 
@@ -196,7 +196,7 @@ public class UserModelRes {
         }
     }
 
-    public class publicInfo {
+    public class PublicInfo {
 
         @SerializedName("bio")
         @Expose

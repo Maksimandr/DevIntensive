@@ -1,4 +1,8 @@
 <resources>
+    <string name="ss_regular">sans-serif</string>
+    <string name="ss_medium">sans-serif-medium</string>
+    <string name="ss_condensed">sans-serif-condensed</string>
+
     <string name="app_name">Зарипов Максим</string>
     <string name="hint1">Мобильный</string>
     <string name="hint2">E-mail</string>
@@ -43,5 +47,6 @@
     <string name="url_github.com">github.com/</string>
     <string name="check_input.vk.nopage">Укажите свою страницу VK</string>
     <string name="check_input.git.norepo">Укажите свой репозиторий в GIT</string>
+    <string name="more_info_btn">Просмотр</string>
 
 </resources>

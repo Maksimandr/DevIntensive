@@ -907,7 +907,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onResponse(Call<ResponseBody> call,
                                    Response<ResponseBody> response) {
-                Log.d(TAG, "Upload success");
+                if(response.code() == 200) {
+                    Log.d(TAG, "Upload success");
+                } else {
+                    Log.d(TAG, "Upload FAIL!");
+                }
             }
 
             @Override
