@@ -92,11 +92,9 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
     private void loginSuccess(UserModelRes userModel) {
         Log.d(TAG, "loginSuccess");
 
-        showSnackbar(userModel.getData().getToken());
-
         saveUserProfileData(userModel);
 
-        Intent loginIntent = new Intent(this, MainActivity.class);
+        Intent loginIntent = new Intent(this, UserListActivity.class);
         startActivity(loginIntent);
     }
 

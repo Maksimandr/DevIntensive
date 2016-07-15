@@ -39,6 +39,8 @@ public class PreferencesManager {
 
 
     public PreferencesManager() {
+        Log.d(TAG, "Constructor");
+
         mSharedPreferences = DevintensiveAplication.getSharedPreferences();
     }
 
@@ -48,6 +50,8 @@ public class PreferencesManager {
      * @param userFields список с информацией о пользователе
      */
     public void saveUserProfileFields(List<String> userFields) {
+        Log.d(TAG, "saveUserProfileFields");
+
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         for (int i = 0; i < USER_FIELDS.length; i++) {
@@ -62,6 +66,8 @@ public class PreferencesManager {
      * @return список с информацией о пользователе
      */
     public List<String> loadUserProfileFields() {
+        Log.d(TAG, "loadUserProfileFields");
+
         List<String> userFields = new ArrayList<>();
         for (int i = 0; i < USER_FIELDS.length; i++) {
             userFields.add(mSharedPreferences.getString(USER_FIELDS[i], null));
@@ -75,6 +81,8 @@ public class PreferencesManager {
      * @param userValues
      */
     public void saveUserProfileStatistic(int[] userValues) {
+        Log.d(TAG, "saveUserProfileStatistic");
+
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         for (int i = 0; i < USER_STATISTIC.length; i++) {
@@ -89,6 +97,8 @@ public class PreferencesManager {
      * @return
      */
     public List<String> loadUserProfileStatistic() {
+        Log.d(TAG, "loadUserProfileStatistic");
+
         List<String> userValues = new ArrayList<>();
         for (int i = 0; i < USER_STATISTIC.length; i++) {
             userValues.add(mSharedPreferences.getString(USER_STATISTIC[i], "0"));
@@ -102,6 +112,8 @@ public class PreferencesManager {
      * @param uri указатель на файл с фото
      */
     public void saveUserPhoto(Uri uri, String updated) {
+        Log.d(TAG, "saveUserPhoto");
+
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(ConstantManager.USER_PHOTO_KEY, uri.toString());
         editor.putString(ConstantManager.USER_PHOTO_UPDATED_KEY, updated);
@@ -116,10 +128,14 @@ public class PreferencesManager {
      * @return указатель на файл с фото
      */
     public Uri loadUserPhoto() {
+        Log.d(TAG, "loadUserPhoto");
+
         return Uri.parse(mSharedPreferences.getString(ConstantManager.USER_PHOTO_KEY, "android.resource://com.softdesign.devintensive/drawable/user_bg"));
     }
 
     public String getUserPhotoUpdated() {
+        Log.d(TAG, "getUserPhotoUpdated");
+
         return mSharedPreferences.getString(ConstantManager.USER_PHOTO_UPDATED_KEY, "0");
     }
 
@@ -129,6 +145,8 @@ public class PreferencesManager {
      * @param uri указатель на файл с фото
      */
     public void saveUserAvatar(Uri uri) {
+        Log.d(TAG, "saveUserAvatar");
+
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(ConstantManager.USER_AVATAR_KEY, uri.toString());
         editor.apply();
@@ -140,30 +158,42 @@ public class PreferencesManager {
      * @return указатель на файл с фото
      */
     public Uri loadUserAvatar() {
+        Log.d(TAG, "loadUserAvatar");
+
         return Uri.parse(mSharedPreferences.getString(ConstantManager.USER_AVATAR_KEY, "android.resource://com.softdesign.devintensive/drawable/ic_account_circle_black_24dp"));
     }
 
     public void saveAuthToken(String authToken) {
+        Log.d(TAG, "saveAuthToken");
+
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(ConstantManager.AUTH_TOKEN_KEY, authToken);
         editor.apply();
     }
 
     public String getAuthToken() {
+        Log.d(TAG, "getAuthToken");
+
         return mSharedPreferences.getString(ConstantManager.AUTH_TOKEN_KEY, "null");
     }
 
     public void saveUserId(String userId) {
+        Log.d(TAG, "saveUserId");
+
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(ConstantManager.USER_ID_KEY, userId);
         editor.apply();
     }
 
     public String getUserId() {
+        Log.d(TAG, "getUserId");
+
         return mSharedPreferences.getString(ConstantManager.USER_ID_KEY, "null");
     }
 
     public void saveUserName(List<String> name) {
+        Log.d(TAG, "saveUserName");
+
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         for (int i = 0; i < USER_NAME.length; i++) {
@@ -173,6 +203,8 @@ public class PreferencesManager {
     }
 
     public String getUserName() {
+        Log.d(TAG, "getUserName");
+
         return mSharedPreferences.getString(ConstantManager.USER_FIRST_NAME_KEY, "Имя") + " " +
                 mSharedPreferences.getString(ConstantManager.USER_SECOND_NAME_KEY, "Фамилия");
     }

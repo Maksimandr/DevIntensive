@@ -1,8 +1,11 @@
 package com.softdesign.devintensive.data.network.interceptors;
 
 
+import android.util.Log;
+
 import com.softdesign.devintensive.data.managers.DataManager;
 import com.softdesign.devintensive.data.managers.PreferencesManager;
+import com.softdesign.devintensive.utils.ConstantManager;
 
 import java.io.IOException;
 
@@ -12,8 +15,12 @@ import okhttp3.Response;
 
 public class HeaderInterceptor implements Interceptor{
 
+    private static final String TAG = ConstantManager.TAG_PREFIX + "HeaderInterceptor ";
+
     @Override
     public Response intercept(Chain chain) throws IOException {
+        Log.d(TAG, "intercept");
+
         PreferencesManager pm = DataManager.getInstance().getPreferencesManager();
 
         Request original = chain.request();
