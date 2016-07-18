@@ -1,7 +1,12 @@
 package com.softdesign.devintensive.utils;
 
 import android.content.Context;
+import android.graphics.Point;
+import android.os.Build;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Display;
+import android.view.WindowManager;
 
 /**
  * Created by MKS-PC on 11.07.2016.
@@ -26,6 +31,39 @@ public class UiHelper {
             result = TypedValue.complexToDimensionPixelSize(tv.data, mContext.getResources().getDisplayMetrics());
         }
         return result;
+    }
+
+    public static int getDisplayMetrics(int side) {
+        WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getMetrics(metrics);
+
+        // since SDK_INT = 1;
+        int widthPixels = metrics.widthPixels;
+        int heightPixels = metrics.heightPixels;
+        // includes window decorations (statusbar bar/menu bar)
+        if (Build.VERSION.SDK_INT >= 14 && Build.VERSION.SDK_INT < 17)
+            try {
+                widthPixels = (Integer) Display.class.getMethod("getRawWidth").invoke(display);
+                heightPixels = (Integer) Display.class.getMethod("getRawHeight").invoke(display);
+            } catch (Exception ignored) {
+            }
+        // includes window decorations (statusbar bar/menu bar)
+        if (Build.VERSION.SDK_INT >= 17)
+            try {
+                Point realSize = new Point();
+                Display.class.getMethod("getRealSize", Point.class).invoke(display, realSize);
+                widthPixels = realSize.x;
+                heightPixels = realSize.y;
+            } catch (Exception ignored) {
+            }
+
+        if (side == 0) {
+            return widthPixels;
+        } else {
+            return heightPixels;
+        }
     }
 
     public static int lerp(int start, int end, float friction) {

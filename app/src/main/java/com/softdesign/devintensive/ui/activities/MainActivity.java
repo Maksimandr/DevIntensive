@@ -66,6 +66,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import static com.softdesign.devintensive.utils.UiHelper.getDisplayMetrics;
+
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -115,6 +117,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private AppBarLayout.LayoutParams mAppBarParams = null;
 
+    private int mUserPhotoWidth, mUserPhotoHeight;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,11 +128,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Log.d(TAG, "onCreate");
 
         mDataManager = DataManager.getInstance();
-
-        mHeaderLayout = mNavigationView.inflateHeaderView(R.layout.drawer_header);
-        mUserAvatar = (ImageView) mHeaderLayout.findViewById(R.id.user_avatar);
-        mUserAvatar.setImageDrawable(new RoundedAvatarDrawable(BitmapFactory.decodeResource(getResources(), R.drawable.avatar)));
-
 
         int[] mUserInfoResId = {R.id.phone_et, R.id.email_et, R.id.vk_et, R.id.git_et, R.id.bio_et};
         mUserInfoViews = new ArrayList<>();
@@ -156,12 +155,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initUserFields();
         initUserProfileStatistic();
 
+        mUserPhotoWidth = getDisplayMetrics(0);
+        mUserPhotoHeight = getResources().getDimensionPixelSize(R.dimen.profile_image_size_256);
 
         Picasso.with(this)
                 .load(mDataManager.getPreferencesManager().loadUserPhoto())
                 .placeholder(R.drawable.user_bg)
                 .error(R.drawable.user_bg)
-                .resize(getResources().getDimensionPixelSize(R.dimen.profile_image_size_256), getResources().getDimensionPixelSize(R.dimen.profile_image_size_256))
+                .resize(mUserPhotoWidth, mUserPhotoHeight)
+                .onlyScaleDown()
                 .centerCrop()
                 .into(mProfileImage);
 
@@ -401,11 +403,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 showSnackbar(item.getTitle().toString());
+
+                switch (item.getItemId()) {
+                    case R.id.user_profile_menu:
+
+                        break;
+                    case R.id.team_menu:
+                        startActivity(new Intent(MainActivity.this, UserListActivity.class));
+                        break;
+                }
                 item.setChecked(true);
                 mNavigationDrawer.closeDrawer(GravityCompat.START);
                 return false;
             }
         });
+
+        mHeaderLayout = mNavigationView.inflateHeaderView(R.layout.drawer_header);
+        mUserAvatar = (ImageView) mHeaderLayout.findViewById(R.id.user_avatar);
+        mUserAvatar.setImageDrawable(new RoundedAvatarDrawable(BitmapFactory.decodeResource(getResources(), R.drawable.avatar)));
+
     }
 
     /**
@@ -707,7 +723,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 .load(selectedImage)
                 .placeholder(R.drawable.user_bg)
                 .error(R.drawable.user_bg)
-                .resize(getResources().getDimensionPixelSize(R.dimen.profile_image_size_256), getResources().getDimensionPixelSize(R.dimen.profile_image_size_256))
+                .resize(mUserPhotoWidth, mUserPhotoHeight)
+                .onlyScaleDown()
                 .centerCrop()
                 .into(mProfileImage);
         mDataManager.getPreferencesManager().saveUserPhoto(selectedImage, new Date().toString());

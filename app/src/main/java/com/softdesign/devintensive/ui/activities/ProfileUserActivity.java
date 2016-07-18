@@ -26,6 +26,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.softdesign.devintensive.utils.UiHelper.getDisplayMetrics;
+
 public class ProfileUserActivity extends BaseActivity {
 
     private static final String TAG = ConstantManager.TAG_PREFIX + "ProfileUserActivity";
@@ -99,8 +101,6 @@ public class ProfileUserActivity extends BaseActivity {
                 .load(userDTO.getPhoto())
                 .placeholder(R.drawable.user_bg)
                 .error(R.drawable.user_bg)
-                .resize(getResources().getDimensionPixelSize(R.dimen.profile_image_size_256), getResources().getDimensionPixelSize(R.dimen.profile_image_size_256))
-                .centerCrop()
                 .into(mProfileImage);
     }
 
