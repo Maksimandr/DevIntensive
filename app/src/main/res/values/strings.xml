@@ -48,5 +48,7 @@
     <string name="check_input.vk.nopage">Укажите свою страницу VK</string>
     <string name="check_input.git.norepo">Укажите свой репозиторий в GIT</string>
     <string name="more_info_btn">Просмотр</string>
+    <string name="toolbar_search.user">Поиск пользователя</string>
+    <string name="toolbar_search.hint">Введите имя пользователя</string>
 
 </resources>

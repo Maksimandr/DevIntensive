@@ -42,4 +42,5 @@ public interface ConstantManager {
     String PARCELABLE_KEY = "PARCELABLE_KEY";
 
     float USER_PHOTO_PROFILE_RATIO = 1.78f;
+    int SEARCH_DELAY = 2000;
 }

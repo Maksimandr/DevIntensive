@@ -13,7 +13,7 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class HeaderInterceptor implements Interceptor{
+public class HeaderInterceptor implements Interceptor {
 
     private static final String TAG = ConstantManager.TAG_PREFIX + "HeaderInterceptor ";
 
@@ -28,7 +28,8 @@ public class HeaderInterceptor implements Interceptor{
         Request.Builder requeqstBuilder = original.newBuilder()
                 .header("X-Access-Token", pm.getAuthToken())
                 .header("Request-User-Id", pm.getUserId())
-                .header("User-Agent", "DevIntensive");
+                .header("User-Agent", "DevIntensive")
+                .header("Cache-Control", "max-age=" + (60 * 60 * 24));
 
         Request request = requeqstBuilder.build();
         return chain.proceed(request);
