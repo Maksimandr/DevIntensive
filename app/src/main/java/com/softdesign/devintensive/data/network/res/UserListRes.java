@@ -20,7 +20,7 @@ public class UserListRes {
         return data;
     }
 
-    public class UserData{
+    public class UserData {
 
         @SerializedName("_id")
         @Expose

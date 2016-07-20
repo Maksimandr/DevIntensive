@@ -2,15 +2,12 @@ package com.softdesign.devintensive.ui.behaviors;
 
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.softdesign.devintensive.R;
-import com.softdesign.devintensive.utils.ConstantManager;
 import com.softdesign.devintensive.utils.UiHelper;
 
 public class CustomNestedScrollBehavior extends AppBarLayout.ScrollingViewBehavior {
@@ -50,7 +47,7 @@ public class CustomNestedScrollBehavior extends AppBarLayout.ScrollingViewBehavi
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
         float currentFriction = UiHelper.currentFriction(mMinAppBarHeight, mMaxAppBarHeight, dependency.getBottom());
-        int offcetY = UiHelper.lerp(mMaxUserStatHeight/2, mMaxUserStatHeight, currentFriction);
+        int offcetY = UiHelper.lerp(mMaxUserStatHeight / 2, mMaxUserStatHeight, currentFriction);
 
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
         lp.topMargin = offcetY;

@@ -9,14 +9,14 @@ import android.widget.ImageView;
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.utils.ConstantManager;
 
-public class AspectRatioImageView extends ImageView{
+public class AspectRatioImageView extends ImageView {
     private static final float DEFAULT_ASPECT_RATIO = ConstantManager.USER_PHOTO_PROFILE_RATIO;
     private final float mAspectRatio;
 
     public AspectRatioImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray a= context.obtainStyledAttributes(attrs, R.styleable.AspectRatioImageView);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AspectRatioImageView);
         mAspectRatio = a.getFloat(R.styleable.AspectRatioImageView_aspect_ratio, DEFAULT_ASPECT_RATIO);
         a.recycle();
     }
@@ -28,7 +28,7 @@ public class AspectRatioImageView extends ImageView{
         int newHeight;
 
         newWidth = getMeasuredWidth();
-        newHeight = (int) (newWidth/mAspectRatio);
+        newHeight = (int) (newWidth / mAspectRatio);
 
         setMeasuredDimension(newWidth, newHeight);
     }

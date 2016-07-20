@@ -24,7 +24,7 @@ import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
-public class DataManager{
+public class DataManager {
 
     private static final String TAG = ConstantManager.TAG_PREFIX + "DataManager";
 
@@ -99,9 +99,15 @@ public class DataManager{
     public List<User> getUsersListFromDb() {
         Log.d(TAG, "getUsersListFromDb");
         List<User> userList = new ArrayList<>();
-
-        userList = getUsersListByName("");
-
+        try {
+            userList = mDaoSession.queryBuilder(User.class)
+                    .where(UserDao.Properties.CodeLines.gt(0))
+                    .orderDesc(UserDao.Properties.CodeLines)
+                    .build()
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return userList;
     }
 
@@ -110,19 +116,11 @@ public class DataManager{
 
         List<User> userList = new ArrayList<>();
         try {
-            if (query.equals("")) {
-                userList = mDaoSession.queryBuilder(User.class)
-                        .where(UserDao.Properties.CodeLines.gt(0))
-                        .orderDesc(UserDao.Properties.CodeLines)
-                        .build()
-                        .list();
-            } else {
-                userList = mDaoSession.queryBuilder(User.class)
-                        .where(UserDao.Properties.Rating.gt(0), UserDao.Properties.SearchName.like("%" + query.toUpperCase() + "%"))
-                        .orderDesc(UserDao.Properties.CodeLines)
-                        .build()
-                        .list();
-            }
+            userList = mDaoSession.queryBuilder(User.class)
+                    .where(UserDao.Properties.Rating.gt(0), UserDao.Properties.SearchName.like("%" + query.toUpperCase() + "%"))
+                    .orderDesc(UserDao.Properties.CodeLines)
+                    .build()
+                    .list();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -19,7 +19,6 @@ import com.softdesign.devintensive.utils.ConstantManager;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.softdesign.devintensive.utils.UiHelper.getDisplayMetrics;

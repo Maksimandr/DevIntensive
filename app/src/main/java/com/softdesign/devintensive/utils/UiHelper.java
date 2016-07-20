@@ -8,9 +8,7 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.WindowManager;
 
-/**
- * Created by MKS-PC on 11.07.2016.
- */
+
 public class UiHelper {
 
     private static Context mContext = DevintensiveAplication.getContext();

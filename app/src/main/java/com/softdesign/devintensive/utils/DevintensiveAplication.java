@@ -39,11 +39,11 @@ public class DevintensiveAplication extends Application {
         return sSharedPreferences;
     }
 
-    public static Context getContext(){
+    public static Context getContext() {
         return sContext;
     }
 
-    public static DaoSession getDaoSession(){
+    public static DaoSession getDaoSession() {
         return sDaoSession;
     }
 

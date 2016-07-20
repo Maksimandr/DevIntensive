@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.auth.api.Auth;
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.managers.DataManager;
 import com.softdesign.devintensive.data.network.req.UserLoginReq;
@@ -22,7 +21,6 @@ import com.softdesign.devintensive.data.storage.models.Repository;
 import com.softdesign.devintensive.data.storage.models.RepositoryDao;
 import com.softdesign.devintensive.data.storage.models.User;
 import com.softdesign.devintensive.data.storage.models.UserDao;
-import com.softdesign.devintensive.utils.AppConfig;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.softdesign.devintensive.utils.NetworkStatusChecker;
 import com.softdesign.devintensive.utils.SplashScreen;
@@ -76,9 +74,9 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onStop() {
         EventBus.getDefault().unregister(this);
-        super.onDestroy();
+        super.onStop();
     }
 
     @Override
@@ -118,17 +116,6 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
 
         saveUserProfileData(userModel);
         saveUserInDb();
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent loginIntent = new Intent(AuthActivity.this, UserListActivity.class);
-                EventBus.getDefault().post(new SplashScreen(1));
-
-                startActivity(loginIntent);
-            }
-        }, AppConfig.START_DELAY);
 
     }
 
@@ -219,6 +206,8 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
                         mRepositoryDao.insertOrReplaceInTx(allRepositories);
                         mUserDao.insertOrReplaceInTx(allUsers);
 
+                        EventBus.getDefault().post(new SplashScreen(1));
+
                     } else {
                         Log.d(TAG, "List request FAIL!");
                         showSnackbar("Список пользователей не может быть получен");
@@ -233,13 +222,14 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<UserListRes> call, Throwable t) {
+                EventBus.getDefault().post(new SplashScreen(1));
                 Log.d(TAG, "List request Error: " + t.getMessage());
             }
         });
     }
 
     private List<Repository> getRepoListFromUserRes(UserListRes.UserData userData) {
-        Log.d(TAG, "getRepoListFromUserRes");
+//        Log.d(TAG, "getRepoListFromUserRes");
 
         final String userId = userData.getId();
 
@@ -257,8 +247,18 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
 
         if (event.code == 200) {
             showProgress();
-        } else if (event.code == 1){
-            hideProgress();
+        } else if (event.code == 1) {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent loginIntent = new Intent(AuthActivity.this, UserListActivity.class);
+
+                    hideProgress();
+                    startActivity(loginIntent);
+
+                }
+            }, 0);
         }
     }
 }

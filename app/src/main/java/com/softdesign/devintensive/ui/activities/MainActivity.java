@@ -889,7 +889,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     cursor.close();
                 }
             }
-
         }
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);

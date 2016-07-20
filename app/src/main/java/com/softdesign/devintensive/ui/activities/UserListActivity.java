@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -29,6 +31,7 @@ import com.softdesign.devintensive.data.storage.models.UserDTO;
 import com.softdesign.devintensive.ui.adapters.UsersAdapter;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.softdesign.devintensive.utils.RoundedAvatarDrawable;
+import com.softdesign.devintensive.utils.UserListLoader;
 
 
 import java.util.List;
@@ -36,9 +39,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UserListActivity extends AppCompatActivity {
+public class UserListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List> {
 
     private static final String TAG = ConstantManager.TAG_PREFIX + "UserList Activity";
+
+    public static final int LOADER_ID = 1;
 
     @BindView(R.id.main_coordinator_container)
     CoordinatorLayout mCoordinatorLayout;
@@ -60,6 +65,7 @@ public class UserListActivity extends AppCompatActivity {
     private List<User> mUsers;
     private String mQuery;
     private Handler mHandler;
+    private Loader<List> mLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +81,11 @@ public class UserListActivity extends AppCompatActivity {
 
         mHandler = new Handler();
 
+        Bundle bundle = new Bundle();
+        mLoader = getSupportLoaderManager().initLoader(LOADER_ID, bundle, this);
+
         setupToolBar();
         setupDrawer();
-        loadUsersFromDb();
-
-
     }
 
     @Override
@@ -124,13 +130,13 @@ public class UserListActivity extends AppCompatActivity {
         Snackbar.make(mCoordinatorLayout, message, Snackbar.LENGTH_LONG).show();
     }
 
-    private void loadUsersFromDb() {
+    private void loadUsersFromDb(List<User> users) {
         Log.d(TAG, "loadUsersFromDb");
 
-        if (mDataManager.getUsersListFromDb().size() == 0) {
+        if (users.size() == 0) {
             showSnackBar("Список пользователей не может быть загружен");
         } else {
-            showUserProfile(mDataManager.getUsersListFromDb());
+            showUserProfile(users);
         }
 
     }
@@ -221,4 +227,26 @@ public class UserListActivity extends AppCompatActivity {
         mHandler.postDelayed(searchUsers, delay);
     }
 
+    @Override
+    public Loader<List> onCreateLoader(int id, Bundle bundle) {
+        Log.d(TAG, "onCreateLoader");
+        Loader<List> mLoader = null;
+        if (id == LOADER_ID) {
+            mLoader = new UserListLoader(this, bundle);
+        }
+
+        return mLoader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List> loader, List users) {
+        Log.d(TAG, "onLoadFinished");
+        loadUsersFromDb(users);
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List> loader) {
+        Log.d(TAG, "onLoaderReset");
+    }
 }

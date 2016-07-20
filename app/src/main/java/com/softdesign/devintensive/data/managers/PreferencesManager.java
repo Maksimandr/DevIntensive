@@ -4,11 +4,9 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 
-import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.softdesign.devintensive.utils.DevintensiveAplication;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

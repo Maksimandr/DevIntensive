@@ -1,7 +1,6 @@
 package com.softdesign.devintensive.ui.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -17,20 +16,17 @@ import android.widget.TextView;
 
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.managers.DataManager;
-import com.softdesign.devintensive.data.storage.models.User;
 import com.softdesign.devintensive.data.storage.models.UserDTO;
 import com.softdesign.devintensive.ui.adapters.RepositoriesAdapter;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.softdesign.devintensive.utils.UiHelper.getDisplayMetrics;
 
 public class ProfileUserActivity extends BaseActivity {
 
@@ -65,10 +61,9 @@ public class ProfileUserActivity extends BaseActivity {
         mRepoListView = (ListView) findViewById(R.id.repositories_list);
         setupToolBar();
         initProfileData();
-
     }
 
-    private void setupToolBar(){
+    private void setupToolBar() {
         Log.d(TAG, "setupToolbar");
 
         setSupportActionBar(mToolbar);
@@ -79,7 +74,7 @@ public class ProfileUserActivity extends BaseActivity {
         }
     }
 
-    private void initProfileData(){
+    private void initProfileData() {
         Log.d(TAG, "initProfileData");
         UserDTO userDTO = getIntent().getParcelableExtra(ConstantManager.PARCELABLE_KEY);
 

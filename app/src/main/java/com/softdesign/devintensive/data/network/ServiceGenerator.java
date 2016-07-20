@@ -25,10 +25,10 @@ public class ServiceGenerator {
 
     private static Retrofit.Builder sBuilder =
             new Retrofit.Builder()
-            .baseUrl(AppConfig.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create());
+                    .baseUrl(AppConfig.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create());
 
-    public static <S> S createService(Class<S> serviceClass){
+    public static <S> S createService(Class<S> serviceClass) {
         Log.d(TAG, "createService");
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
