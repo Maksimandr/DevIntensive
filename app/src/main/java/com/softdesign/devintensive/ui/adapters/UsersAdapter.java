@@ -55,7 +55,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
 
     @Override
     public void onBindViewHolder(final UsersAdapter.UserViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder");
+//        Log.d(TAG, "onBindViewHolder");
 
         final User user = mUsers.get(position);
         final String userPhoto;
@@ -117,6 +117,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
 
     @Override
     public int getItemCount() {
+//        Log.d(TAG, "getItemCount");
         return mUsers.size();
     }
 
@@ -146,7 +147,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
             mBio = (TextView) itemView.findViewById(R.id.bio_txt);
             mShowMore = (Button) itemView.findViewById(R.id.more_info_btn);
 
-            mDummy=mUserPhoto.getContext().getResources().getDrawable(R.drawable.user_bg);
+            mDummy = mUserPhoto.getContext().getResources().getDrawable(R.drawable.user_bg);
             mShowMore.setOnClickListener(this);
         }
 

@@ -16,9 +16,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.softdesign.devintensive.R;
+import com.softdesign.devintensive.data.managers.DataManager;
+import com.softdesign.devintensive.data.storage.models.User;
 import com.softdesign.devintensive.data.storage.models.UserDTO;
 import com.softdesign.devintensive.ui.adapters.RepositoriesAdapter;
 import com.softdesign.devintensive.utils.ConstantManager;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -79,6 +83,7 @@ public class ProfileUserActivity extends BaseActivity {
         Log.d(TAG, "initProfileData");
         UserDTO userDTO = getIntent().getParcelableExtra(ConstantManager.PARCELABLE_KEY);
 
+        final String userPhoto;
         final List<String> repositories = userDTO.getRepositories();
         final RepositoriesAdapter repositoriesAdapter = new RepositoriesAdapter(this, repositories);
 
@@ -97,11 +102,47 @@ public class ProfileUserActivity extends BaseActivity {
         mUserProjects.setText(userDTO.getProjects());
         mCollapsingToolbarLayout.setTitle(userDTO.getFullName());
 
-        Picasso.with(this)
-                .load(userDTO.getPhoto())
-                .placeholder(R.drawable.user_bg)
+        if (userDTO.getPhoto().isEmpty()) {
+            Log.e(TAG, "onBindViewHolder: user with name " + userDTO.getFullName() + " has empty photo");
+            userPhoto = "null";
+        } else {
+            userPhoto = userDTO.getPhoto();
+        }
+
+        DataManager.getInstance().getPicasso()
+                .load(userPhoto)
                 .error(R.drawable.user_bg)
-                .into(mProfileImage);
+                .placeholder(R.drawable.user_bg)
+                .fit()
+                .centerCrop()
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .into(mProfileImage, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d(TAG, " load from cache success");
+                    }
+
+                    @Override
+                    public void onError() {
+                        DataManager.getInstance().getPicasso()
+                                .load(userPhoto)
+                                .error(R.drawable.user_bg)
+                                .placeholder(R.drawable.user_bg)
+                                .fit()
+                                .centerCrop()
+                                .into(mProfileImage, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Log.d(TAG, " load from network success");
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        Log.d(TAG, " Could not fetch image");
+                                    }
+                                });
+                    }
+                });
     }
 
 }

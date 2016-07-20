@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.Auth;
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.managers.DataManager;
 import com.softdesign.devintensive.data.network.req.UserLoginReq;
@@ -24,6 +25,10 @@ import com.softdesign.devintensive.data.storage.models.UserDao;
 import com.softdesign.devintensive.utils.AppConfig;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.softdesign.devintensive.utils.NetworkStatusChecker;
+import com.softdesign.devintensive.utils.SplashScreen;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +55,8 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
     CoordinatorLayout mCoordinatorLayout;
 
     private DataManager mDataManager;
-    private RepositoryDao mRepositoryDao;
     private UserDao mUserDao;
+    private RepositoryDao mRepositoryDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +65,20 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
         ButterKnife.bind(this);
         Log.d(TAG, "onCreate");
 
+        EventBus.getDefault().register(this);
+
         mDataManager = DataManager.getInstance();
         mUserDao = mDataManager.getDaoSession().getUserDao();
         mRepositoryDao = mDataManager.getDaoSession().getRepositoryDao();
 
         mRememberPassword.setOnClickListener(this);
         mSignIn.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     @Override
@@ -111,6 +124,8 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void run() {
                 Intent loginIntent = new Intent(AuthActivity.this, UserListActivity.class);
+                EventBus.getDefault().post(new SplashScreen(1));
+
                 startActivity(loginIntent);
             }
         }, AppConfig.START_DELAY);
@@ -126,6 +141,7 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
                 @Override
                 public void onResponse(Call<UserModelRes> call, Response<UserModelRes> response) {
                     if (response.code() == 200) {
+                        EventBus.getDefault().post(new SplashScreen(200));
                         loginSuccess(response.body());
                     } else if (response.code() == 404) {
                         showSnackbar("Неверные логин или пароль");
@@ -136,7 +152,7 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
 
                 @Override
                 public void onFailure(Call<UserModelRes> call, Throwable t) {
-                    // TODO: 12.07.2016  обработать ошибки
+                    showSnackbar("Всё пропало Шеф!!!");
                 }
             });
         } else {
@@ -223,6 +239,8 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private List<Repository> getRepoListFromUserRes(UserListRes.UserData userData) {
+        Log.d(TAG, "getRepoListFromUserRes");
+
         final String userId = userData.getId();
 
         List<Repository> repositories = new ArrayList<>();
@@ -233,4 +251,14 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
         return repositories;
     }
 
+    @Subscribe
+    public void onSplashScreen(SplashScreen event) {
+        Log.d(TAG, "onSplashScreen");
+
+        if (event.code == 200) {
+            showProgress();
+        } else if (event.code == 1){
+            hideProgress();
+        }
+    }
 }

@@ -24,7 +24,7 @@ import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
-public class DataManager {
+public class DataManager{
 
     private static final String TAG = ConstantManager.TAG_PREFIX + "DataManager";
 
@@ -92,34 +92,38 @@ public class DataManager {
 
 
     public DaoSession getDaoSession() {
+        Log.d(TAG, "getDaoSession");
         return mDaoSession;
     }
 
-    public List<User> getUserListFromDb() {
+    public List<User> getUsersListFromDb() {
+        Log.d(TAG, "getUsersListFromDb");
         List<User> userList = new ArrayList<>();
 
-        try {
-            userList = mDaoSession.queryBuilder(User.class)
-                    .where(UserDao.Properties.CodeLines.gt(0))
-                    .orderDesc(UserDao.Properties.CodeLines)
-                    .build()
-                    .list();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        userList = getUsersListByName("");
+
         return userList;
     }
 
-    public List<User> getUserListByName(String query){
+    public List<User> getUsersListByName(String query) {
+        Log.d(TAG, "getUsersListByName");
 
         List<User> userList = new ArrayList<>();
-        try{
-            userList = mDaoSession.queryBuilder(User.class)
-                    .where(UserDao.Properties.Rating.gt(0), UserDao.Properties.SearchName.like("%" + query.toUpperCase() + "%"))
-                    .orderDesc(UserDao.Properties.CodeLines)
-                    .build()
-                    .list();
-        }catch (Exception e){
+        try {
+            if (query.equals("")) {
+                userList = mDaoSession.queryBuilder(User.class)
+                        .where(UserDao.Properties.CodeLines.gt(0))
+                        .orderDesc(UserDao.Properties.CodeLines)
+                        .build()
+                        .list();
+            } else {
+                userList = mDaoSession.queryBuilder(User.class)
+                        .where(UserDao.Properties.Rating.gt(0), UserDao.Properties.SearchName.like("%" + query.toUpperCase() + "%"))
+                        .orderDesc(UserDao.Properties.CodeLines)
+                        .build()
+                        .list();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

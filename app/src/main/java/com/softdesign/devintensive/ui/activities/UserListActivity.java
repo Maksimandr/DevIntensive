@@ -31,7 +31,6 @@ import com.softdesign.devintensive.utils.ConstantManager;
 import com.softdesign.devintensive.utils.RoundedAvatarDrawable;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -85,6 +84,8 @@ public class UserListActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        Log.d(TAG, "onPrepareOptionsMenu");
+
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         mSearchItem = menu.findItem(R.id.toolbar_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(mSearchItem);
@@ -97,7 +98,7 @@ public class UserListActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String search) {
-                showUserByQuery(search);
+                showUsersByQuery(search);
                 return false;
             }
         });
@@ -126,10 +127,10 @@ public class UserListActivity extends AppCompatActivity {
     private void loadUsersFromDb() {
         Log.d(TAG, "loadUsersFromDb");
 
-        if (mDataManager.getUserListFromDb().size() == 0) {
+        if (mDataManager.getUsersListFromDb().size() == 0) {
             showSnackBar("Список пользователей не может быть загружен");
         } else {
-            showUsers(mDataManager.getUserListFromDb());
+            showUserProfile(mDataManager.getUsersListFromDb());
         }
 
     }
@@ -179,7 +180,9 @@ public class UserListActivity extends AppCompatActivity {
         Snackbar.make(mCoordinatorLayout, message, Snackbar.LENGTH_LONG).show();
     }
 
-    private void showUsers(List<User> users) {
+    private void showUserProfile(List<User> users) {
+        Log.d(TAG, "showUserProfile");
+
         mUsers = users;
         mUsersAdapter = new UsersAdapter(mUsers, new UsersAdapter.UserViewHolder.CustomClickListener() {
             @Override
@@ -196,18 +199,26 @@ public class UserListActivity extends AppCompatActivity {
         mRecyclerView.swapAdapter(mUsersAdapter, false);
     }
 
-    private void showUserByQuery(String query) {
+    private void showUsersByQuery(String query) {
+        Log.d(TAG, "showUsersByQuery");
+
         mQuery = query;
+        int delay;
 
         Runnable searchUsers = new Runnable() {
             @Override
             public void run() {
-                showUsers(mDataManager.getUserListByName(mQuery));
+                showUserProfile(mDataManager.getUsersListByName(mQuery));
             }
         };
 
+        if (query.equals("")) {
+            delay = 0;
+        } else {
+            delay = ConstantManager.SEARCH_DELAY;
+        }
         mHandler.removeCallbacks(searchUsers);
-        mHandler.postDelayed(searchUsers, ConstantManager.SEARCH_DELAY);
+        mHandler.postDelayed(searchUsers, delay);
     }
 
 }
