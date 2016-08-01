@@ -3,6 +3,7 @@ package com.softdesign.devintensive.ui.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import com.softdesign.devintensive.utils.ConstantManager;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.softdesign.devintensive.utils.UiHelper.getDisplayMetrics;
@@ -29,6 +32,15 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     private static final String TAG = ConstantManager.TAG_PREFIX + "UsersAdapter ";
 
     private int mUserPhotoWidth, mUserPhotoHeight;
+
+    private static final int PENDING_REMOVAL_TIMEOUT = 3000; // 3sec
+    List<String> items;
+    List<String> itemsPendingRemoval;
+    int lastInsertedIndex; // so we can add some more items for testing purposes
+    boolean undoOn = false; // is undo on, you can turn it on from the toolbar menu
+    private Handler handler = new Handler(); // hanlder for running delayed runnables
+    HashMap<String, Runnable> pendingRunnables = new HashMap<>(); // map of items to pending runnables, so we can cancel a removal if need be
+
 
     Context mContext;
     List<User> mUsers;
@@ -41,6 +53,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
         mUserPhotoWidth = getDisplayMetrics(0);
         mUserPhotoHeight = (int) (mUserPhotoWidth / ConstantManager.USER_PHOTO_PROFILE_RATIO);
         this.mCustomClickListener = customClickListener;
+
+        items = new ArrayList<>();
+        itemsPendingRemoval = new ArrayList<>();
+        for (int i = 1; i <= mUsers.size(); i++) {
+            items.add("Item " + i);
+        }
     }
 
     @Override
@@ -118,6 +136,55 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     public int getItemCount() {
 //        Log.d(TAG, "getItemCount");
         return mUsers.size();
+    }
+
+
+    public void setUndoOn(boolean undoOn) {
+        Log.d(TAG, "setUndoOn");
+        this.undoOn = undoOn;
+    }
+
+    public boolean isUndoOn() {
+        Log.d(TAG, "isUndoOn");
+        return undoOn;
+    }
+
+    public void pendingRemoval(int position) {
+        Log.d(TAG, "pendingRemoval");
+        final String item = items.get(position);
+        if (!itemsPendingRemoval.contains(item)) {
+            itemsPendingRemoval.add(item);
+            // this will redraw row in "undo" state
+            notifyItemChanged(position);
+            // let's create, store and post a runnable to remove the item
+            Runnable pendingRemovalRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    remove(items.indexOf(item));
+                }
+            };
+            handler.postDelayed(pendingRemovalRunnable, PENDING_REMOVAL_TIMEOUT);
+            pendingRunnables.put(item, pendingRemovalRunnable);
+        }
+    }
+
+    public void remove(int position) {
+        Log.d(TAG, "remove");
+        String item = items.get(position);
+        if (itemsPendingRemoval.contains(item)) {
+            itemsPendingRemoval.remove(item);
+        }
+        if (items.contains(item)) {
+            items.remove(position);
+            mUsers.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public boolean isPendingRemoval(int position) {
+        Log.d(TAG, "isPendingRemoval");
+        String item = items.get(position);
+        return itemsPendingRemoval.contains(item);
     }
 
 

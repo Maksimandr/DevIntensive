@@ -50,5 +50,6 @@
     <dimen name="placeholder_foto_size_90">90dp</dimen>
     <dimen name="avatar_60">60dp</dimen>
 
+    <dimen name="ic_clear_margin">16dp</dimen>
 
 </resources>
